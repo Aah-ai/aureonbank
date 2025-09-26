@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imaginary Bank App</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { background-color: #f5f5f5; color: #222; transition: 0.3s; }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: #004080; color: #fff; flex-wrap: wrap; }
+  header img { height: 50px; vertical-align: middle; }
+  nav a { color: #fff; text-decoration: none; margin-left: 1rem; font-weight: bold; }
+  nav a:hover { text-decoration: underline; }
+  .dark { background-color: #1e1e1e; color: #ddd; }
+  .dark header { background-color: #000080; }
+  .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+  section { margin-bottom: 3rem; }
+  h2 { margin-bottom: 1rem; color: #004080; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+  table, th, td { border: 1px solid #ccc; }
+  th, td { padding: 0.75rem; text-align: center; }
+  th { background: #004080; color: #fff; }
+  .dark th { background: #000080; }
+  input, select, textarea, button { padding: 0.5rem; margin: 0.25rem 0; width: 100%; }
+  button { background: #004080; color: #fff; border: none; cursor: pointer; transition: 0.2s; }
+  button:hover { background: #0066cc; }
+  .dark button { background: #000080; }
+  .card { border: 1px solid #ccc; padding: 1rem; border-radius: 10px; margin-bottom: 1rem; background: #fff; }
+  .dark .card { background: #222; }
+  #chatbox { border: 1px solid #ccc; padding: 1rem; max-height: 300px; overflow-y: auto; margin-bottom: 0.5rem; background: #fff; }
+  .dark #chatbox { background: #222; }
+  .message { margin: 0.25rem 0; }
+  .user { font-weight: bold; color: #004080; }
+  .bot { font-weight: bold; color: #008000; }
+  #darkModeToggle { cursor: pointer; padding: 0.5rem; background: #fff; color: #004080; border-radius: 5px; margin-left: 1rem; }
+  .dark #darkModeToggle { background: #004080; color: #fff; }
+  #loanBreakdown { max-height: 250px; overflow-y: auto; margin-top: 1rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <img src="https://via.placeholder.com/50?text=Shield" alt="Shield Logo">
+    <span>Imaginary Bank App</span>
+  </div>
+  <nav>
+    <a href="#banks">Banks</a>
+    <a href="#calculator">Loan Calculator</a>
+    <a href="#account">Open Account</a>
+    <a href="#rewards">Rewards</a>
+    <a href="#chatbot">Chatbot</a>
+    <span id="darkModeToggle">Dark Mode</span>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- Banks Section -->
+  <section id="banks">
+    <h2>Our Banks & Comparison</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Bank Name</th>
+          <th>Interest Rate (%)</th>
+          <th>Monthly Fees (AED)</th>
+          <th>Eco Incentive</th>
+          <th>Reward Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>EcoBank</td><td>3.5</td><td>50</td><td>Solar Bonus</td><td>100</td></tr>
+        <tr><td>FutureBank</td><td>4.0</td><td>60</td><td>Green Savings</td><td>120</td></tr>
+        <tr><td>SmartFinance</td><td>3.8</td><td>55</td><td>Electric Car Rebate</td><td>90</td></tr>
+        <tr><td>AlphaBank</td><td>4.2</td><td>65</td><td>Paperless Rewards</td><td>110</td></tr>
+        <tr><td>NextGenBank</td><td>3.9</td><td>52</td><td>Tree Planting</td><td>95</td></tr>
+        <tr><td>UnityBank</td><td>4.1</td><td>58</td><td>Eco Cashback</td><td>105</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Loan Calculator Section -->
+  <section id="calculator">
+    <h2>Loan Calculator</h2>
+    <div class="card">
+      <label>Loan Amount:</label>
+      <input type="number" id="loanAmount" placeholder="Enter amount">
+      <label>Currency:</label>
+      <select id="currency">
+        <option value="AED">AED</option>
+        <option value="BTC">BTC</option>
+        <option value="ETH">ETH</option>
+      </select>
+      <label>Term (months):</label>
+      <input type="number" id="term" placeholder="Enter term">
+      <label>Interest Rate (%):</label>
+      <input type="number" id="rate" placeholder="Enter rate">
+      <button onclick="calculateLoan()">Calculate</button>
+      <p id="loanResult"></p>
+      <div id="loanBreakdown"></div>
+    </div>
+  </section>
+
+  <!-- Account Creation Section -->
+  <section id="account">
+    <h2>Open Bank Account</h2>
+    <div class="card">
+      <form id="accountForm" onsubmit="return createAccount()">
+        <label>Full Name:</label>
+        <input type="text" id="fullName" required>
+        <label>Emirates ID:</label>
+        <input type="text" id="emiratesID" required>
+        <label>Email:</label>
+        <input type="email" id="email" required>
+        <label>Initial Deposit (AED):</label>
+        <input type="number" id="deposit" required>
+        <button type="submit">Create Account</button>
+      </form>
+      <p id="accountResult"></p>
+    </div>
+  </section>
+
+  <!-- Rewards Section -->
+  <section id="rewards">
+    <h2>Eco-Friendly Rewards</h2>
+    <div class="card">🌱 Solar Bonus: Earn points for solar usage.</div>
+    <div class="card">🚗 Electric Car Rebate: Eco points for EV owners.</div>
+    <div class="card">🌳 Tree Planting Rewards: Get points for supporting green projects.</div>
+    <div class="card">💻 Paperless Banking: Bonus points for digital transactions.</div>
+  </section>
+
+  <!-- Chatbot Section -->
+  <section id="chatbot">
+    <h2>Chat with EmBot</h2>
+    <div class="card">
+      <div id="chatbox"></div>
+      <input type="text" id="userMessage" placeholder="Type a message...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Dark mode toggle
+  const toggle = document.getElementById('darkModeToggle');
+  toggle.addEventListener('click', () => { document.body.classList.toggle('dark'); });
+
+  // Conversion rates (simulated)
+  const rates = { AED: 1, BTC: 100000, ETH: 15000 };
+
+  // Loan calculator with breakdown
+  function calculateLoan() {
+    let P = parseFloat(document.getElementById('loanAmount').value);
+    const currency = document.getElementById('currency').value;
+    const R = parseFloat(document.getElementById('rate').value) / 100 / 12;
+    const N = parseInt(document.getElementById('term').value);
+
+    if (!P || !R || !N) { alert('Please enter all fields'); return; }
+
+    // Convert to AED
+    P = P * rates[currency];
+
+    const monthly = (P * R) / (1 - Math.pow(1 + R, -N));
+    document.getElementById('loanResult').innerText =
+      `Monthly Payment: ${monthly.toFixed(2)} AED | Total: ${(monthly*N).toFixed(2)} AED`;
+
+    // Breakdown table
+    let balance = P;
+    let breakdown = "<table><tr><th>Month</th><th>Principal (AED)</th><th>Interest (AED)</th><th>Balance (AED)</th></tr>";
+    for (let i=1; i<=N; i++) {
+      const interest = balance * R;
+      const principal = monthly - interest;
+      balance -= principal;
+      breakdown += `<tr><td>${i}</td><td>${principal.toFixed(2)}</td><td>${interest.toFixed(2)}</td><td>${balance.toFixed(2)}</td></tr>`;
+    }
+    breakdown += "</table>";
+    document.getElementById('loanBreakdown').innerHTML = breakdown;
+  }
+
+  // Account creation with localStorage
+  function createAccount() {
+    const name = document.getElementById('fullName').value;
+    const eid = document.getElementById('emiratesID').value;
+    const email = document.getElementById('email').value;
+    const deposit = document.getElementById('deposit').value;
+
+    const account = { name, eid, email, deposit };
+    let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
+    accounts.push(account);
+    localStorage.setItem('accounts', JSON.stringify(accounts));
+
+    document.getElementById('accountResult').innerText =
+      `Account created successfully for ${name}! Initial deposit: AED ${deposit}`;
+    document.getElementById('accountForm').reset();
+    return false;
+  }
+
+  // Chatbot with localStorage
+  const chatbox = document.getElementById('chatbox');
+
+  // Load previous chats
+  let chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
+  chatHistory.forEach(msg => chatbox.innerHTML += msg);
+
+  function sendMessage() {
+    const input = document.getElementById('userMessage').value;
+    if (!input) return;
+
+    const userMsg = `<div class="message user">You: ${input}</div>`;
+    chatbox.innerHTML += userMsg;
+
+    let reply = "Sorry, I don't understand.";
+    if (input.toLowerCase().includes('hello')) reply = "Hello! How can I assist you today?";
+    if (input.toLowerCase().includes('loan')) reply = "You can use our loan calculator to estimate payments.";
+    if (input.toLowerCase().includes('account')) reply = "You can create a new account using the Open Account form.";
+
+    const botMsg = `<div class="message bot">EmBot: ${reply}</div>`;
+    chatbox.innerHTML += botMsg;
+    chatbox.scrollTop = chatbox.scrollHeight;
+    document.getElementById('userMessage').value = '';
+
+    // Save chat history
+    chatHistory.push(userMsg, botMsg);
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  }
+</script>
+
+</body>
+</html>
